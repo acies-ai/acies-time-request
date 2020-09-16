@@ -34,5 +34,20 @@ describe("Basic tests", function ()
         }); 
 
     });
+
+    it("should parse a rolling range of 7 days", () => {
+
+        const res = parse({
+            days: 7,
+        });
+
+        should.exist(res);
+
+        res.should.eql({
+            from: moment().subtract(7, "days").format("YYYY-MM-DD"),
+            to: moment().format("YYYY-MM-DD"),
+        }); 
+
+    });
     
 });
