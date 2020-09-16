@@ -2,25 +2,26 @@ import moment from 'moment';
 
 const DATEFORMAT = "YYYY-MM-DD";
 const valid_relative_range_components = ["days", "weeks", "months", "years", "quarters"];
+const MAX_DATE = "MAX_DATE";
+const MIN_DATE = "MIN_DATE";
 
 const parse = (input) => {
 
-    let output = {};
+    let output = {
+        from: MIN_DATE,
+        to: MAX_DATE,
+    };
+
+    if(!input || typeof input !== "object") return output;
 
     if(input.from) output.from = moment(input.from, DATEFORMAT).format(DATEFORMAT);
     if(input.to) output.to = moment(input.to, DATEFORMAT).format(DATEFORMAT);
-
-    if(!output.to) output.to = moment().format(DATEFORMAT);
-    
-    if(!output.from && !output.from)
+    if(!input.from && !input.from)
     {
         const relative_date_component = Object.keys(input).find(r => valid_relative_range_components.includes(r));
         if(relative_date_component)
         {
-            return {
-                from: moment().subtract(input[relative_date_component], relative_date_component).format("YYYY-MM-DD"),
-                to: moment().format("YYYY-MM-DD"),
-            };
+            output.from = moment().subtract(input[relative_date_component], relative_date_component).format("YYYY-MM-DD");
         }
     }
     
@@ -29,4 +30,6 @@ const parse = (input) => {
 
 export {
     parse,
+    MIN_DATE,
+    MAX_DATE,
 };
