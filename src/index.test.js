@@ -1,7 +1,7 @@
 import should from "should";
 import {describe, it} from "mocha";
 import {parse, MIN_DATE, MAX_DATE} from "./";
-import moment from "moment";
+import moment, { months } from "moment";
 
 describe("parse", function ()
 {
@@ -11,6 +11,20 @@ describe("parse", function ()
         parse(undefined).should.eql({ from: MIN_DATE, to: MAX_DATE});
         parse(null).should.eql({ from: MIN_DATE, to: MAX_DATE});
         parse("").should.eql({ from: MIN_DATE, to: MAX_DATE});
+        parse({
+            from: null,
+        }).should.eql({ from: MIN_DATE, to: MAX_DATE});
+        parse({
+            to: null,
+        }).should.eql({ from: MIN_DATE, to: MAX_DATE});
+        parse({
+            from: null,
+            to: null,
+        }).should.eql({ from: MIN_DATE, to: MAX_DATE});
+        parse({
+            from: undefined,
+            to: undefined,
+        }).should.eql({ from: MIN_DATE, to: MAX_DATE});
     });
 
     it("should parse 2 specific dates", () => {
@@ -55,6 +69,58 @@ describe("parse", function ()
             from: moment().subtract(7, "days").format("YYYY-MM-DD"),
             to: MAX_DATE,
         }); 
+
+    });
+
+    it("should parse last week", () => {
+
+        const res = parse({
+            weeks: 1,
+            last: true,
+        });
+
+        should.exist(res);
+
+        res.should.eql({
+            from: moment().startOf("week").subtract(7, "days").format("YYYY-MM-DD"),
+            to: moment().startOf("week").subtract(1, "days").format("YYYY-MM-DD"),
+        }); 
+
+    });
+
+    it("should parse last month", () => {
+
+        const res = parse({
+            months: 1,
+            last: true,
+        });
+
+        should.exist(res);
+
+        res.should.eql({
+            from: moment().startOf("month").subtract(1, "month").format("YYYY-MM-DD"),
+            to: moment().startOf("month").subtract(1, "days").format("YYYY-MM-DD"),
+        });
+
+        moment(res.from, "YYYY-MM-DD").date().should.eql(1);
+
+    });
+
+    it("should parse last month in the singular form", () => {
+
+        const res = parse({
+            month: 1,
+            last: true,
+        });
+
+        should.exist(res);
+
+        res.should.eql({
+            from: moment().startOf("month").subtract(1, "month").format("YYYY-MM-DD"),
+            to: moment().startOf("month").subtract(1, "days").format("YYYY-MM-DD"),
+        });
+
+        moment(res.from, "YYYY-MM-DD").date().should.eql(1);
 
     });
     
