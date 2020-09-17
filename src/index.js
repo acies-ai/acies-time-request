@@ -22,12 +22,12 @@ const parse = (input) => {
         const is_last = input.last === true;
         if(relative_date_component && !is_last)
         {
-            output.from = moment().subtract(input[relative_date_component], relative_date_component).format("YYYY-MM-DD");
+            output.from = moment().subtract(input[relative_date_component], relative_date_component).format(DATEFORMAT);
         }
         else if(relative_date_component)
         {
-            output.from = moment().startOf(relative_date_component).subtract(input[relative_date_component], relative_date_component).format("YYYY-MM-DD");
-            output.to = moment().startOf(relative_date_component).subtract(1, "days").format("YYYY-MM-DD");
+            output.from = moment().startOf(relative_date_component).subtract(input[relative_date_component], relative_date_component).format(DATEFORMAT);
+            output.to = moment().startOf(relative_date_component).subtract(1, "days").format(DATEFORMAT);
         }
     }
     
