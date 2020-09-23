@@ -123,5 +123,11 @@ describe("parse", function ()
         moment(res.from, "YYYY-MM-DD").date().should.eql(1);
 
     });
+
+    it("should return min and max if it exists in options", () => {
+        const min = 'min';
+        const max = 'max';
+        parse({}, { min, max }).should.eql({ from: min, to: max});
+    })
     
 });
