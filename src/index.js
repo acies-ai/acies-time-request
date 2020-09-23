@@ -5,11 +5,10 @@ const valid_relative_range_components = ["days", "day", "weeks", "week", "months
 const MAX_DATE = "MAX_DATE";
 const MIN_DATE = "MIN_DATE";
 
-const parse = (input) => {
-
+const parse = (input, options = {}) => {
     let output = {
-        from: MIN_DATE,
-        to: MAX_DATE,
+        from: options.min || MIN_DATE,
+        to: options.max || MAX_DATE,
     };
 
     if(!input || typeof input !== "object") return output;
