@@ -124,6 +124,25 @@ describe("parse", function ()
 
     });
 
+    it("should return last 3 months, and only last 3", () => {
+
+        const res = parse({
+            months: 3,
+            last: true,
+        });
+
+        should.exist(res);
+
+        res.should.eql({
+            from: moment().startOf("month").subtract(3, "month").format("YYYY-MM-DD"),
+            to: moment().startOf("month").subtract(1, "day").format("YYYY-MM-DD"),
+        });
+
+        moment(res.from, "YYYY-MM-DD").date().should.eql(1);
+
+    });
+
+
     it("should return min and max if it exists in options", () => {
         const min = 'min';
         const max = 'max';
