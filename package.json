@@ -1,6 +1,6 @@
 {
   "name": "@aciesai/time-request",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Parse a JSON payload and determine the time range",
   "main": "lib/index.js",
   "scripts": {
