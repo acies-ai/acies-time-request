@@ -15,7 +15,7 @@ const parse = (input, options = {}) => {
 
     if(input.from) output.from = moment(input.from, DATEFORMAT).format(DATEFORMAT);
     if(input.to) output.to = moment(input.to, DATEFORMAT).format(DATEFORMAT);
-    if(!input.from && !input.from)
+    if(!input.from && !input.to)
     {
         const relative_date_component = Object.keys(input).find(r => valid_relative_range_components.includes(r));
         const is_last = input.last === true;
